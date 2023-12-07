@@ -25,7 +25,6 @@ class MaterialAppWithWidget extends StatelessWidget {
   const MaterialAppWithWidget({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeChanger>(context);
