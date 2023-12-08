@@ -24,13 +24,12 @@ class _FiltrarPersonajeState extends State<FiltrarPersonaje> {
 
   Future<void> getPersonaje() async {
     usuarioId++;
-    final response =
-        await Dio().get('https://rickandmortyapi.com/api/character/$usuarioId');
+    final response = await Dio().get(
+        'https://apirender-g-v-2023.onrender.com/api/v1/rickandmorty/personaje/$usuarioId?api_key=123asdlk1981');
     character = Character.fromJson(response.data);
     setState(() {});
   }
 
-  @override
   int selectedIndex = 0;
 
   final screens = [
@@ -46,11 +45,11 @@ class _FiltrarPersonajeState extends State<FiltrarPersonaje> {
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(character?.name ?? 'No data'),
-          Text(character?.gender ?? 'No data'),
-          Text(character?.species ?? 'No data'),
-          Text(character?.status ?? 'No data'),
-          if (character != null) Image.network(character!.image),
+          Text(character?.data.name ?? 'No data'),
+          Text(character?.data.gender ?? 'No data'),
+          Text(character?.data.species ?? 'No data'),
+          Text(character?.data.status ?? 'No data'),
+          if (character != null) Image.network(character!.data.image),
         ]),
       ),
       floatingActionButton: FloatingActionButton(

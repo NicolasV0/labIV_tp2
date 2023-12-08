@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tp2_vaylet/providers/theme.dart';
 import 'package:tp2_vaylet/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 

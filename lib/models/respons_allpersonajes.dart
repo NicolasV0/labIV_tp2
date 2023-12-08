@@ -4,73 +4,49 @@
 
 import 'dart:convert';
 
-Personaje personajesFromJson(String str) =>
-    Personaje.fromJson(json.decode(str));
+Personajes personajesFromJson(String str) =>
+    Personajes.fromJson(json.decode(str));
 
-String personajesToJson(Personaje data) => json.encode(data.toJson());
+String personajesToJson(Personajes data) => json.encode(data.toJson());
 
-class Personaje {
-  Info info;
-  List<Result> results;
+class Personajes {
+  final int status;
+  final List<Result> results;
+  final String statusText;
 
-  Personaje({
-    required this.info,
+  Personajes({
+    required this.status,
     required this.results,
+    required this.statusText,
   });
 
-  factory Personaje.fromJson(Map<String, dynamic> json) => Personaje(
-        info: Info.fromJson(json["info"]),
+  factory Personajes.fromJson(Map<String, dynamic> json) => Personajes(
+        status: json["status"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        statusText: json["statusText"],
       );
 
   Map<String, dynamic> toJson() => {
-        "info": info.toJson(),
+        "status": status,
         "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
-}
-
-class Info {
-  int count;
-  int pages;
-  String next;
-  dynamic prev;
-
-  Info({
-    required this.count,
-    required this.pages,
-    required this.next,
-    required this.prev,
-  });
-
-  factory Info.fromJson(Map<String, dynamic> json) => Info(
-        count: json["count"],
-        pages: json["pages"],
-        next: json["next"],
-        prev: json["prev"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "count": count,
-        "pages": pages,
-        "next": next,
-        "prev": prev,
+        "statusText": statusText,
       };
 }
 
 class Result {
-  int id;
-  String name;
-  Status status;
-  Species species;
-  String type;
-  Gender gender;
-  Location origin;
-  Location location;
-  String image;
-  List<String> episode;
-  String url;
-  DateTime created;
+  final int id;
+  final String name;
+  final Status status;
+  final Species species;
+  final String type;
+  final Gender gender;
+  final Location origin;
+  final Location location;
+  final String image;
+  final List<String> episode;
+  final String url;
+  final DateTime created;
 
   Result({
     required this.id,
@@ -118,14 +94,18 @@ class Result {
       };
 }
 
-enum Gender { FEMALE, MALE, UNKNOWN }
+enum Gender { FEMALE, MALE, GENDERLESS, UNKNOWN }
 
-final genderValues = EnumValues(
-    {"Female": Gender.FEMALE, "Male": Gender.MALE, "unknown": Gender.UNKNOWN});
+final genderValues = EnumValues({
+  "Female": Gender.FEMALE,
+  "Male": Gender.MALE,
+  "Genderless": Gender.GENDERLESS,
+  "unknown": Gender.UNKNOWN
+});
 
 class Location {
-  String name;
-  String url;
+  final String name;
+  final String url;
 
   Location({
     required this.name,
@@ -143,10 +123,13 @@ class Location {
       };
 }
 
-enum Species { ALIEN, HUMAN }
+enum Species { ALIEN, HUMAN, HUMANOID }
 
-final speciesValues =
-    EnumValues({"Alien": Species.ALIEN, "Human": Species.HUMAN});
+final speciesValues = EnumValues({
+  "Alien": Species.ALIEN,
+  "Humanoid": Species.HUMANOID,
+  "Human": Species.HUMAN
+});
 
 enum Status { ALIVE, DEAD, UNKNOWN }
 

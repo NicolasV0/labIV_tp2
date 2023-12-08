@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tp2_vaylet/screens/filtrar_personaje.dart';
 import 'package:tp2_vaylet/screens/filtrar_personajes.dart';
 import 'package:tp2_vaylet/screens/home_screen.dart';
+import 'package:tp2_vaylet/screens/result_busq.dart';
 
 class BuscarPersonaje extends StatefulWidget {
   const BuscarPersonaje({super.key});
@@ -13,6 +14,10 @@ class BuscarPersonaje extends StatefulWidget {
 class _BuscarPersonajeState extends State<BuscarPersonaje> {
   final _textNombre = TextEditingController();
   String userSearch = '';
+  String name = '';
+  String estatus = '';
+  String especie = '';
+
   int selectedIndex = 0;
   final screens = [
     HomeScreen(),
@@ -54,6 +59,15 @@ class _BuscarPersonajeState extends State<BuscarPersonaje> {
                 onPressed: () {
                   setState(() {
                     userSearch = _textNombre.text;
+                    List<String> cadena = userSearch.split(',');
+                    name = cadena[0].trim();
+                    estatus = cadena[1].trim();
+                    especie = cadena[2].trim();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ResultBusqueda(name, estatus, especie)));
                   });
                 },
                 color: Colors.blue,

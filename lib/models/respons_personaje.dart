@@ -1,22 +1,42 @@
-// To parse this JSON data, do
-//
-//     final personaje = personajeFromJson(jsonString);
-
 class Character {
-  int id;
-  String name;
-  String status;
-  String species;
-  String type;
-  String gender;
-  Location origin;
-  Location location;
-  String image;
-  List<String> episode;
-  String url;
-  DateTime created;
+  final int status;
+  final Data data;
+  final String statusText;
 
   Character({
+    required this.status,
+    required this.data,
+    required this.statusText,
+  });
+
+  factory Character.fromJson(Map<String, dynamic> json) => Character(
+        status: json["status"],
+        data: Data.fromJson(json["data"]),
+        statusText: json["statusText"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "data": data.toJson(),
+        "statusText": statusText,
+      };
+}
+
+class Data {
+  final int id;
+  final String name;
+  final String status;
+  final String species;
+  final String type;
+  final String gender;
+  final Location origin;
+  final Location location;
+  final String image;
+  final List<String> episode;
+  final String url;
+  final DateTime created;
+
+  Data({
     required this.id,
     required this.name,
     required this.status,
@@ -31,7 +51,7 @@ class Character {
     required this.created,
   });
 
-  factory Character.fromJson(Map<String, dynamic> json) => Character(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
         name: json["name"],
         status: json["status"],
@@ -63,8 +83,8 @@ class Character {
 }
 
 class Location {
-  String name;
-  String url;
+  final String name;
+  final String url;
 
   Location({
     required this.name,

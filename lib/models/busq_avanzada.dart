@@ -11,52 +11,28 @@ String busquedaAvanzadaToJson(BusquedaAvanzada data) =>
     json.encode(data.toJson());
 
 class BusquedaAvanzada {
-  final Info info;
+  final int status;
   final List<Result> results;
+  final String statusText;
 
   BusquedaAvanzada({
-    required this.info,
+    required this.status,
     required this.results,
+    required this.statusText,
   });
 
   factory BusquedaAvanzada.fromJson(Map<String, dynamic> json) =>
       BusquedaAvanzada(
-        info: Info.fromJson(json["info"]),
+        status: json["status"],
         results:
             List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        statusText: json["statusText"],
       );
 
   Map<String, dynamic> toJson() => {
-        "info": info.toJson(),
+        "status": status,
         "results": List<dynamic>.from(results.map((x) => x.toJson())),
-      };
-}
-
-class Info {
-  final int count;
-  final int pages;
-  final String next;
-  final dynamic prev;
-
-  Info({
-    required this.count,
-    required this.pages,
-    required this.next,
-    required this.prev,
-  });
-
-  factory Info.fromJson(Map<String, dynamic> json) => Info(
-        count: json["count"],
-        pages: json["pages"],
-        next: json["next"],
-        prev: json["prev"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "count": count,
-        "pages": pages,
-        "next": next,
-        "prev": prev,
+        "statusText": statusText,
       };
 }
 
@@ -65,7 +41,7 @@ class Result {
   final String name;
   final Status status;
   final Species species;
-  final Type type;
+  final String type;
   final Gender gender;
   final Location origin;
   final Location location;
@@ -94,7 +70,7 @@ class Result {
         name: json["name"],
         status: statusValues.map[json["status"]]!,
         species: speciesValues.map[json["species"]]!,
-        type: typeValues.map[json["type"]]!,
+        type: json["type"],
         gender: genderValues.map[json["gender"]]!,
         origin: Location.fromJson(json["origin"]),
         location: Location.fromJson(json["location"]),
@@ -109,7 +85,7 @@ class Result {
         "name": name,
         "status": statusValues.reverse[status],
         "species": speciesValues.reverse[species],
-        "type": typeValues.reverse[type],
+        "type": type,
         "gender": genderValues.reverse[gender],
         "origin": origin.toJson(),
         "location": location.toJson(),
@@ -120,9 +96,14 @@ class Result {
       };
 }
 
-enum Gender { MALE }
+enum Gender { MALE, FEMALE, GENDERLESS, UNKNOWN }
 
-final genderValues = EnumValues({"Male": Gender.MALE});
+final genderValues = EnumValues({
+  "Male": Gender.MALE,
+  "Female": Gender.FEMALE,
+  "Genderless": Gender.GENDERLESS,
+  "unknown": Gender.UNKNOWN
+});
 
 class Location {
   final String name;
@@ -144,21 +125,18 @@ class Location {
       };
 }
 
-enum Species { HUMAN }
+enum Species { HUMAN, HUMANOID, ALIEN }
 
-final speciesValues = EnumValues({"Human": Species.HUMAN});
-
-enum Status { ALIVE }
-
-final statusValues = EnumValues({"Alive": Status.ALIVE});
-
-enum Type { CLONE, EMPTY, SOULLESS_PUPPET }
-
-final typeValues = EnumValues({
-  "Clone": Type.CLONE,
-  "": Type.EMPTY,
-  "Soulless Puppet": Type.SOULLESS_PUPPET
+final speciesValues = EnumValues({
+  "Human": Species.HUMAN,
+  "Humanoid": Species.HUMANOID,
+  "Alien": Species.ALIEN
 });
+
+enum Status { ALIVE, DEAD, UNKNOWN }
+
+final statusValues = EnumValues(
+    {"Alive": Status.ALIVE, "Dead": Status.DEAD, "unknown": Status.UNKNOWN});
 
 class EnumValues<T> {
   Map<String, T> map;

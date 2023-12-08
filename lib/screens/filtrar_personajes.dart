@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tp2_vaylet/models/respons_allpersonajes.dart';
-import 'package:tp2_vaylet/models/respons_personaje.dart';
 import 'package:tp2_vaylet/screens/busq_avanz_pers.dart';
 import 'package:tp2_vaylet/screens/filtrar_personaje.dart';
 import 'package:tp2_vaylet/screens/home_screen.dart';
@@ -31,7 +30,7 @@ class _FiltrarPersonajesState extends State<FiltrarPersonajes> {
       ),
       body: FutureBuilder(
           future: getPersonajes(),
-          builder: (BuildContext context, AsyncSnapshot<Personaje> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<Personajes> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else {
@@ -63,7 +62,7 @@ class _FiltrarPersonajesState extends State<FiltrarPersonajes> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            activeIcon: Icon(Icons.search_rounded),
+            activeIcon: Icon(Icons.search_outlined),
             label: 'Busqueda',
           )
         ],
@@ -79,7 +78,7 @@ class _ListaPersonajes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: result.length,
+        itemCount: result.length + 1,
         itemBuilder: (BuildContext context, int i) {
           final resultados = result[i];
           return ListTile(
@@ -91,8 +90,8 @@ class _ListaPersonajes extends StatelessWidget {
   }
 }
 
-Future<Personaje> getPersonajes() async {
-  final resp =
-      await http.get(Uri.parse('https://rickandmortyapi.com/api/character'));
+Future<Personajes> getPersonajes() async {
+  final resp = await http.get(Uri.parse(
+      'https://apirender-g-v-2023.onrender.com/api/v1/rickandmorty/personajes?api_key=123asdlk1981'));
   return personajesFromJson(resp.body);
 }
