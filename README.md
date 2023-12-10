@@ -14,6 +14,10 @@ Se utilizaron las siguientes depencias de flutter:
 - dio.
 - http.
 
+<p>
+  Para el modelado de datos se utilizo quicktype.io
+</p>
+
 ##HomeScreen
 
 [![home-screen.png](https://i.postimg.cc/Kck86LhH/home-screen.png)](https://postimg.cc/9z22TDMd)
