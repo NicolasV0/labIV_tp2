@@ -63,25 +63,33 @@ class _BuscarPersonajeState extends State<BuscarPersonaje> {
                 onPressed: () {
                   setState(() {
                     userSearch = _textNombre.text;
-                    List<String> cadena = userSearch.split(',');
-                    name = cadena[0].trim();
-                    estatus = cadena[1].trim();
-                    especie = cadena[2].trim();
-                    if (name.toLowerCase().trim() == 'arder') {
-                      arder = true;
-                    } else if (cadena[0].isEmpty ||
-                        cadena[1].isEmpty ||
-                        cadena[2].isEmpty) {
+                    if (userSearch == "") {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Debes completar todos los campos'),
                         behavior: SnackBarBehavior.floating,
                       ));
                     } else {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ResultBusqueda(name, estatus, especie)));
+                      List<String> cadena = userSearch.split(',');
+                      try {
+                        name = cadena[0].trim();
+                        estatus = cadena[1].trim();
+                        especie = cadena[2].trim();
+                        if (name.toLowerCase().trim() == 'arder') {
+                          arder = true;
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ResultBusqueda(name, estatus, especie)));
+                        }
+                      } catch (err) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Debes completar todos los campos'),
+                          behavior: SnackBarBehavior.floating,
+                        ));
+                      }
                     }
                   });
                 },
