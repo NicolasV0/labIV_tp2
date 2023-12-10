@@ -17,6 +17,7 @@ class _BuscarPersonajeState extends State<BuscarPersonaje> {
   String name = '';
   String estatus = '';
   String especie = '';
+  bool arder = false;
 
   int selectedIndex = 0;
   final screens = [
@@ -37,16 +38,19 @@ class _BuscarPersonajeState extends State<BuscarPersonaje> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                  child: Center(
-                      child: Text(
-                userSearch,
-                style: const TextStyle(fontSize: 36),
-              ))),
+              SizedBox(
+                height: 300,
+                width: 300,
+                child: Image.asset(
+                  arder == false ? 'assets/rick_dance.gif' : 'assets/arder.gif',
+                  fit: BoxFit.cover,
+                ),
+              ),
               TextField(
                 controller: _textNombre,
                 decoration: InputDecoration(
-                    hintText: 'Nombre personaje',
+                    hintText: 'name,status,species',
+                    alignLabelWithHint: true,
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                         onPressed: () {
@@ -63,11 +67,22 @@ class _BuscarPersonajeState extends State<BuscarPersonaje> {
                     name = cadena[0].trim();
                     estatus = cadena[1].trim();
                     especie = cadena[2].trim();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ResultBusqueda(name, estatus, especie)));
+                    if (name.toLowerCase().trim() == 'arder') {
+                      arder = true;
+                    } else if (cadena[0].isEmpty ||
+                        cadena[1].isEmpty ||
+                        cadena[2].isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Debes completar todos los campos'),
+                        behavior: SnackBarBehavior.floating,
+                      ));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ResultBusqueda(name, estatus, especie)));
+                    }
                   });
                 },
                 color: Colors.blue,

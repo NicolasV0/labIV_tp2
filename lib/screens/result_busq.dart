@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tp2_vaylet/models/busq_avanzada.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final apiKey = dotenv.env['API_KEY'];
 
 class ResultBusqueda extends StatefulWidget {
   final String name, estatus, especie;
@@ -23,9 +26,34 @@ class _ResultBusquedaState extends State<ResultBusqueda> {
           builder:
               (BuildContext context, AsyncSnapshot<BusquedaAvanzada> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
+              return Center(
+                  child: SizedBox(
+                height: 300,
+                width: 300,
+                child: Image.asset(
+                  'assets/buscando.gif',
+                  fit: BoxFit.cover,
+                ),
+              ));
+            } else if (snapshot.data?.status == 200) {
               return _ListaPersonajes(snapshot.data!.results);
+            } else {
+              return Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        height: 300,
+                        width: 300,
+                        child: Image.asset(
+                          'assets/not_found.gif',
+                          fit: BoxFit.cover,
+                        )),
+                    const Text('Personaje not found')
+                  ],
+                ),
+              );
             }
           }),
     );
@@ -54,6 +82,6 @@ class _ListaPersonajes extends StatelessWidget {
 Future<BusquedaAvanzada> getResultado(
     String name, String estado, String especie) async {
   final resp = await http.get(Uri.parse(
-      'https://apirender-g-v-2023.onrender.com/api/v1/rickandmorty/filtrar-personajes/?nombre=$name&status=$estado&species=$especie&api_key=123asdlk1981'));
+      'https://apirender-g-v-2023.onrender.com/api/v1/rickandmorty/filtrar-personajes/?nombre=$name&status=$estado&species=$especie&api_key=$apiKey'));
   return busquedaAvanzadaFromJson(resp.body);
 }

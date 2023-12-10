@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -18,8 +19,6 @@ class MyApp extends StatelessWidget {
       child: const MaterialAppWithWidget(),
     );
   }
-
-  // This widget is the root of your application.
 }
 
 class MaterialAppWithWidget extends StatelessWidget {
@@ -32,7 +31,7 @@ class MaterialAppWithWidget extends StatelessWidget {
     return MaterialApp(
       theme: theme.getTheme(),
       debugShowCheckedModeBanner: false,
-      title: 'Practico 2',
+      title: 'Proyecto Final',
       initialRoute: 'home',
       routes: {
         'home': (BuildContext context) => HomeScreen(),

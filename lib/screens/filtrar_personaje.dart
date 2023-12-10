@@ -4,6 +4,9 @@ import 'package:tp2_vaylet/models/respons_personaje.dart';
 import 'package:tp2_vaylet/screens/busq_avanz_pers.dart';
 import 'package:tp2_vaylet/screens/filtrar_personajes.dart';
 import 'package:tp2_vaylet/screens/home_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final apiKey = dotenv.env['API_KEY'];
 
 class FiltrarPersonaje extends StatefulWidget {
   const FiltrarPersonaje({super.key});
@@ -24,10 +27,18 @@ class _FiltrarPersonajeState extends State<FiltrarPersonaje> {
 
   Future<void> getPersonaje() async {
     usuarioId++;
-    final response = await Dio().get(
-        'https://apirender-g-v-2023.onrender.com/api/v1/rickandmorty/personaje/$usuarioId?api_key=123asdlk1981');
-    character = Character.fromJson(response.data);
-    setState(() {});
+    try {
+      final response = await Dio().get(
+        'https://apirender-g-v-2023.onrender.com/api/v1/rickandmorty/personaje/$usuarioId?api_key=$apiKey',
+      );
+      if (response.statusCode == 200) {
+        character = Character.fromJson(response.data);
+      }
+    } catch (error) {
+      const Text('Error al obtener el personaje');
+    } finally {
+      setState(() {});
+    }
   }
 
   int selectedIndex = 0;
@@ -43,14 +54,28 @@ class _FiltrarPersonajeState extends State<FiltrarPersonaje> {
         title: const Text('Personaje'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(character?.data.name ?? 'No data'),
-          Text(character?.data.gender ?? 'No data'),
-          Text(character?.data.species ?? 'No data'),
-          Text(character?.data.status ?? 'No data'),
-          if (character != null) Image.network(character!.data.image),
-        ]),
+      body: Card(
+        child: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            if (character != null)
+              Image.network(
+                character!.data.image,
+                fit: BoxFit.fill,
+                width: 400,
+                height: 400,
+              ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              character?.data.name ?? 'No data',
+              style: const TextStyle(fontSize: 25, color: Colors.blue),
+            ),
+            Text('Genero: ${character?.data.gender ?? 'No data'}'),
+            Text('Especie: ${character?.data.species ?? 'No data'}'),
+            Text('Estado: ${character?.data.status ?? 'No data'}'),
+          ]),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.navigate_next),
