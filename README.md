@@ -1,16 +1,35 @@
-# tp2_vaylet
+# Tp final Lab IV
 
-A new Flutter project.
+# Flutter API REST Rick and Morty
 
-## Getting Started
+- Desarrollar una API que permita conocer los distintos personajes de Rick and morty.
+- El repositorio se encuentra alojado en un repositorio de GitHub, el cual puede ser clonado para su uso.
+<p>
+Se utilizaron las siguientes depencias de flutter:
+</p>
+- Providers.
+- flutter_lints.
+- doteenv.
+- animate_do
+- dio.
+- http.
 
-This project is a starting point for a Flutter application.
+##HomeScreen
 
-A few resources to get you started if this is your first Flutter project:
+[![home-screen.png](https://i.postimg.cc/Kck86LhH/home-screen.png)](https://postimg.cc/9z22TDMd)
+> Pantalla principal.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+##Screen Personaje
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[![personaje.png](https://i.postimg.cc/wM7gHCrN/personaje.png)](https://postimg.cc/0KRL0BP5)
+> respuesta de busqueda por personaje.
+
+##Screen Lista Personajes
+
+[![all-personajes.png](https://i.postimg.cc/Ss9HrmHD/all-personajes.png)](https://postimg.cc/XGV2N6jC)
+> respuesta de lista de todos los personajes.
+
+##Screen Busqueda Avanzada
+
+[![busqueda.png](https://i.postimg.cc/02SrwStw/busqueda.png)](https://postimg.cc/gnYY9xbz)
+> respuesta de busqueda avanzada.
